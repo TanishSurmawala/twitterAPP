@@ -30,6 +30,7 @@ class HomeTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         self.loadTweets()
     }
+    
 
     
     
@@ -40,7 +41,7 @@ class HomeTableViewController: UITableViewController {
         let myParams = ["count": numberOfTweet]
 
         
-        TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success: { (tweets: [NSDictionary]) in
+        TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams as [String : Any], success: { (tweets: [NSDictionary]) in
             
             self.tweetArray.removeAll()
             for tweet in tweets{
@@ -119,6 +120,11 @@ class HomeTableViewController: UITableViewController {
         }
         
         
+        cell.setFavorite(isFavorited: tweetArray [indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        //cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
+        
+        
         return cell
         
     }
@@ -136,5 +142,6 @@ class HomeTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return tweetArray.count
     }
+    
 
 }
